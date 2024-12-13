@@ -9,7 +9,7 @@ public enum ExceptionMessage {
     MISSION_NOT_FOUND("존재하지 않는 미션입니다."),
 
     CREW_NAME_DUPLICATED("크루원 이름이 중복됩니다."),
-    INVALID_INPUT("존재하지 않는 기능입니다."),
+    INVALID_INPUT("유효하지 않은 입력입니다."),
     ;
     private final String message;
 
