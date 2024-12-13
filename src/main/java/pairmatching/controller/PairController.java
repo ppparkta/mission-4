@@ -1,22 +1,25 @@
 package pairmatching.controller;
 
+import pairmatching.view.ConsoleInputView;
+import pairmatching.view.OutputView;
+
 public class PairController {
     private final CrewInitializer crewInitializer;
+    private final InputHandler inputHandler;
+    private final ConsoleInputView consoleInputView;
+    private final OutputView outputView;
 
     public PairController() {
         crewInitializer = new CrewInitializer();
+        inputHandler = new InputHandler();
+        consoleInputView = new ConsoleInputView();
+        outputView = new OutputView();
     }
 
     public void run() {
-        // 기능 종류 입력
-
-        // 페어 매칭
-
-        // 페어 조회
-
-        // 페어 초기화
-
-        // 종료
-
+        String input = "0";
+        do {
+            input = inputHandler.selectFunc();
+        } while (!input.equals("Q"));
     }
 }
