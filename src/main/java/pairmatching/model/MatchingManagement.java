@@ -11,12 +11,10 @@ public class MatchingManagement {
     private final List<Matching> matchings = new ArrayList<>();
 
     public boolean isExistMatching(List<String> infoInputs) {
-        Mission mission = Mission.fromName(infoInputs.get(MatchingInputConfig.MISSION.getValue()), level);
-        Course course = Course.fromName(infoInputs.get(MatchingInputConfig.COURSE.getValue()));
-        Level level = Level.fromName(infoInputs.get(MatchingInputConfig.LEVEL.getValue()));
+        InfoResult result = getInfoResult(infoInputs);
 
         for (Matching matching : matchings) {
-            if (matching.equals(mission, course, level)) {
+            if (matching.equals(result.mission(), result.course(), result.level())) {
                 return true;
             }
         }
@@ -24,10 +22,27 @@ public class MatchingManagement {
     }
 
     public void deleteMatching(List<String> infoInputs) {
-        // todo: 중복되는 매칭 삭제하기
+        InfoResult result = getInfoResult(infoInputs);
+
+        for (Matching matching : matchings) {
+            if (matching.equals(result.mission(), result.course(), result.level())) {
+                matchings.remove(matching);
+            }
+        }
     }
 
     public void matchPair(CrewInfo crewInfo) {
         // todo: 새로운 매칭 생성하기
+    }
+
+    private static InfoResult getInfoResult(List<String> infoInputs) {
+        Course course = Course.fromName(infoInputs.get(MatchingInputConfig.COURSE.getValue()));
+        Level level = Level.fromName(infoInputs.get(MatchingInputConfig.LEVEL.getValue()));
+        Mission mission = Mission.fromName(infoInputs.get(MatchingInputConfig.MISSION.getValue()), level);
+        InfoResult result = new InfoResult(course, level, mission);
+        return result;
+    }
+
+    private record InfoResult(Course course, Level level, Mission mission) {
     }
 }
