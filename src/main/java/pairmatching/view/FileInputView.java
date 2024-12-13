@@ -2,13 +2,15 @@ package pairmatching.view;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 import pairmatching.util.ExceptionMessage;
 
 public class FileInputView {
     public List<String> getInput(String filename) {
-        List<String> inputLines = new ArrayList<>();
+        Set<String> inputLines = new HashSet<>();
         InputStream inputStream = getClass().getClassLoader().getResourceAsStream(filename);
         validateInputStream(inputStream);
         try (Scanner scanner = new Scanner(inputStream)) {
@@ -16,7 +18,7 @@ public class FileInputView {
         } catch (Exception e) {
             System.err.println(ExceptionMessage.FILE_READ_ERROR.getMessage());
         }
-        return inputLines;
+        return List.copyOf(inputLines);
     }
 
     private static void validateInputStream(InputStream inputStream) {
@@ -25,9 +27,12 @@ public class FileInputView {
         }
     }
 
-    private void readLine(List<String> inputLines, Scanner scanner) {
+    private void readLine(Set<String> inputLines, Scanner scanner) {
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine().replace(" ", "");
+            if (inputLines.contains(line)) {
+                throw new IllegalArgumentException(ExceptionMessage.CREW_NAME_DUPLICATED.getMessage());
+            }
             inputLines.add(line);
         }
     }
