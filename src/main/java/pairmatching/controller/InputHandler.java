@@ -1,5 +1,8 @@
 package pairmatching.controller;
 
+import java.util.List;
+import pairmatching.model.CrewInfo;
+import pairmatching.model.MatchingManagement;
 import pairmatching.util.InputParser;
 import pairmatching.view.ConsoleInputView;
 import pairmatching.view.OutputView;
@@ -15,42 +18,75 @@ public class InputHandler {
         this.inputParser = new InputParser();
     }
 
-    public String selectFunc() {
+    public String selectFunc(CrewInfo crewInfo, MatchingManagement matchingManagement) {
         outputView.printFunction();
         String input = consoleInputView.getInput();
         try {
-            processFunction(input);
+            processFunction(input, crewInfo, matchingManagement);
         } catch (IllegalArgumentException e) {
             outputView.printError(e.getMessage());
         }
         return input;
     }
 
-    private void processFunction(String input) {
+    private void processFunction(String input, CrewInfo crewInfo, MatchingManagement matchingManagement) {
         if (input.equals("1")) {
-            processPairMatching();
+            processPairMatching(crewInfo, matchingManagement);
         }
         if (input.equals("2")) {
-            processPairQuery();
+            processPairQuery(crewInfo, matchingManagement);
         }
         if (input.equals("3")) {
-            processPairInit();
+            processPairInit(matchingManagement);
         }
     }
 
-    private void processPairMatching() {
-        outputView.printCourseInfo();
-        String input = consoleInputView.getInput();
-        inputParser.parsePairInput(input);
+    private void processPairMatching(CrewInfo crewInfo, MatchingManagement matchingManagement) {
+        while (true) {
+            try {
+                List<String> infoInputs = printAndInputMission();
+                if (!processExistMatching(matchingManagement, infoInputs)) {
+                    continue;
+                }
+                matchingManagement.matchPair(crewInfo);
+                return;
+            } catch (IllegalArgumentException e) {
+                outputView.printError(e.getMessage());
+            }
+        }
     }
 
-    private void processPairQuery() {
-        outputView.printCourseInfo();
-        String input = consoleInputView.getInput();
-        inputParser.parsePairInput(input);
+    private boolean processExistMatching(MatchingManagement matchingManagement, List<String> infoInputs) {
+        if (matchingManagement.isExistMatching(infoInputs)) {
+            outputView.printDuplicatedMatching();
+            String input = consoleInputView.getInput();
+            if (!input.equals("네")) {
+                return false;
+            }
+        }
+        // 기존 매칭 삭제하기
+        matchingManagement.deleteMatching(infoInputs);
+        return true;
     }
 
-    private void processPairInit() {
+    private List<String> printAndInputMission() {
+        outputView.printCourseInfo();
+        String input = consoleInputView.getInput();
+        return inputParser.parsePairInput(input);
+    }
+
+    private void processPairQuery(CrewInfo crewInfo, MatchingManagement matchingManagement) {
+        while (true) {
+            try {
+                List<String> infoInputs = printAndInputMission();
+                return;
+            } catch (IllegalArgumentException e) {
+                outputView.printError(e.getMessage());
+            }
+        }
+    }
+
+    private void processPairInit(MatchingManagement matchingManagement) {
 
     }
 }

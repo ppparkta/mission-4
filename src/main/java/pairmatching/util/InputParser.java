@@ -9,7 +9,7 @@ import pairmatching.model.info.Mission;
 public class InputParser {
     public List<String> parsePairInput(String input) {
         String[] split = input.split(",");
-        if (split.length != 2) {
+        if (split.length != 3) {
             throw new IllegalArgumentException(ExceptionMessage.INVALID_INPUT.getMessage());
         }
         List<String> inputs = Arrays.stream(split).toList();
