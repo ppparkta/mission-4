@@ -1,4 +1,4 @@
-package pairmatching.model;
+package pairmatching.model.info;
 
 import pairmatching.util.ExceptionMessage;
 

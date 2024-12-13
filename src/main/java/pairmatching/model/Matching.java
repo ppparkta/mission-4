@@ -2,6 +2,8 @@ package pairmatching.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import pairmatching.model.info.Level;
+import pairmatching.model.info.Mission;
 
 public class Matching {
     private final Level level;

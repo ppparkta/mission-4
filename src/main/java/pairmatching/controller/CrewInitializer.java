@@ -1,7 +1,7 @@
 package pairmatching.controller;
 
 import java.util.List;
-import pairmatching.model.Course;
+import pairmatching.model.info.Course;
 import pairmatching.model.Crew;
 import pairmatching.model.CrewInfo;
 import pairmatching.util.FileConfig;
