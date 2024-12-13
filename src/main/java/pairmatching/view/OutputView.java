@@ -1,6 +1,12 @@
 package pairmatching.view;
 
+import pairmatching.util.ExceptionMessage;
+
 public class OutputView {
+    public void printError(String message) {
+        System.out.println(message);
+    }
+
     public void printFunction() {
         System.out.println("기능을 선택하세요.");
         System.out.println("1. 페어 매칭");
