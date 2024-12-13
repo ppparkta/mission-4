@@ -21,7 +21,7 @@ public class FileInputView {
 
     private static void validateInputStream(InputStream inputStream) {
         if (inputStream == null) {
-            throw new IllegalArgumentException(ExceptionMessage.FOUND_NOT_FILE.getMessage());
+            throw new IllegalArgumentException(ExceptionMessage.FILE_FOUND_NOT.getMessage());
         }
     }
 
