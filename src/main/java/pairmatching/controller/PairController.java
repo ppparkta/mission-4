@@ -6,6 +6,7 @@ import pairmatching.view.OutputView;
 
 public class PairController {
     private final CrewInitializer crewInitializer;
+    private final
     private final InputHandler inputHandler;
     private final OutputView outputView;
 

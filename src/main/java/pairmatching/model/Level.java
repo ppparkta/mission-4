@@ -1,5 +1,7 @@
 package pairmatching.model;
 
+import pairmatching.util.ExceptionMessage;
+
 public enum Level {
     LEVEL1("레벨1"),
     LEVEL2("레벨2"),
@@ -11,5 +13,14 @@ public enum Level {
 
     Level(String name) {
         this.name = name;
+    }
+
+    public static Level fromName(String levelName) {
+        for (Level level : Level.values()) {
+            if(level.name.equals(levelName)) {
+                return level;
+            }
+        }
+        throw new IllegalArgumentException(ExceptionMessage.LEVEL_NOT_FOUND.getMessage());
     }
 }
