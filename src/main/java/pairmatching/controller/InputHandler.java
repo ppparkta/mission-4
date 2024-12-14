@@ -56,25 +56,6 @@ public class InputHandler {
         }
     }
 
-    private boolean processExistMatching(MatchingManagement matchingManagement, List<String> infoInputs) {
-        if (matchingManagement.isExistMatching(infoInputs)) {
-            outputView.printDuplicatedMatching();
-            String input = consoleInputView.getInput();
-            if (!input.equals("네")) {
-                return false;
-            }
-        }
-        // 기존 매칭 삭제하기
-        matchingManagement.deleteMatching(infoInputs);
-        return true;
-    }
-
-    private List<String> printAndInputMission() {
-        outputView.printCourseInfo();
-        String input = consoleInputView.getInput();
-        return inputParser.parsePairInput(input);
-    }
-
     private void processPairQuery(CrewInfo crewInfo, MatchingManagement matchingManagement) {
         while (true) {
             try {
@@ -88,5 +69,23 @@ public class InputHandler {
 
     private void processPairInit(MatchingManagement matchingManagement) {
 
+    }
+
+    private boolean processExistMatching(MatchingManagement matchingManagement, List<String> infoInputs) {
+        if (matchingManagement.isExistMatching(infoInputs)) {
+            outputView.printDuplicatedMatching();
+            String input = consoleInputView.getInput();
+            if (!input.equals("네")) {
+                return false;
+            }
+        }
+        matchingManagement.deleteMatching(infoInputs);
+        return true;
+    }
+
+    private List<String> printAndInputMission() {
+        outputView.printCourseInfo();
+        String input = consoleInputView.getInput();
+        return inputParser.parsePairInput(input);
     }
 }

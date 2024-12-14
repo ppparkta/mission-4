@@ -24,23 +24,22 @@ public class MatchingManagement {
     public void deleteMatching(List<String> infoInputs) {
         InfoResult result = getInfoResult(infoInputs);
 
-        for (Matching matching : matchings) {
-            if (matching.equals(result.mission(), result.course(), result.level())) {
-                matchings.remove(matching);
-            }
-        }
+        matchings.removeIf(matching -> matching.equals(result.mission(), result.course(), result.level()));
     }
 
-    public void matchPair(CrewInfo crewInfo) {
+    public void matchPair(CrewInfo crewInfo, List<String> infoInputs) {
         // todo: 새로운 매칭 생성하기
+        InfoResult result = getInfoResult(infoInputs);
+
+        
+
     }
 
     private static InfoResult getInfoResult(List<String> infoInputs) {
         Course course = Course.fromName(infoInputs.get(MatchingInputConfig.COURSE.getValue()));
         Level level = Level.fromName(infoInputs.get(MatchingInputConfig.LEVEL.getValue()));
         Mission mission = Mission.fromName(infoInputs.get(MatchingInputConfig.MISSION.getValue()), level);
-        InfoResult result = new InfoResult(course, level, mission);
-        return result;
+        return new InfoResult(course, level, mission);
     }
 
     private record InfoResult(Course course, Level level, Mission mission) {
